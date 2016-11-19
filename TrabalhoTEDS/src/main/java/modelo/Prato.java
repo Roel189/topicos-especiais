@@ -2,16 +2,16 @@ package modelo;
 
 public class Prato extends Produto {
 
-    private long codigo_prato;
+    private int codigo_prato;
     private String nome;
     private String descricao;
     private double preco;
 
-    public long getCodigo_prato() {
+    public int getCodigo_prato() {
         return codigo_prato;
     }
 
-    public void setCodigo_prato(long codigo_prato) {
+    public void setCodigo_prato(int codigo_prato) {
         this.codigo_prato = codigo_prato;
     }
 

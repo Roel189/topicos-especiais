@@ -14,19 +14,19 @@ public class Produto {
         this.codigo = codigo;
     }
 
-    public int getPrato_codigo() {
+    public int getProduto_Prato_codigo() {
         return prato_codigo;
     }
 
-    public void setPrato_codigo(int prato_codigo) {
+    public void setProduto_Prato_codigo(int prato_codigo) {
         this.prato_codigo = prato_codigo;
     }
 
-    public int getBebida_codigo() {
+    public int getProduto_Bebida_codigo() {
         return bebida_codigo;
     }
 
-    public void setBebida_codigo(int bebida_codigo) {
+    public void setProduto_Bebida_codigo(int bebida_codigo) {
         this.bebida_codigo = bebida_codigo;
     }
 

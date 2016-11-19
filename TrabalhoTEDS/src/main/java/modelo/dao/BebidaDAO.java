@@ -10,7 +10,7 @@ import java.util.List;
 import modelo.Bebida;
 
 public class BebidaDAO {
-    
+
     private final Connection conexao;
 
     public BebidaDAO(Connection conexao) {
@@ -18,7 +18,7 @@ public class BebidaDAO {
     }
 
     public Bebida buscar(long codigo) throws SQLException {
-        Bebida bebida= null;
+        Bebida bebida = null;
         String selecao = "SELECT * FROM bebida WHERE codigo = ?";
         try (PreparedStatement pstmt = conexao.prepareStatement(selecao)) {
             pstmt.setLong(1, codigo);
@@ -54,4 +54,20 @@ public class BebidaDAO {
         return bebidas;
     }
 
+    public void gravar(Bebida bebida) throws SQLException {
+
+        String insercao = "INSERT INTO bebida (codigo, nome, descricao, preco) VALUES (?, ?, ?, ?);";
+        try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
+            pstmt.setInt(1, bebida.getCodigo_bebida());
+            pstmt.setString(2, bebida.getNome());
+            pstmt.setString(3, bebida.getDescricao());
+            pstmt.setDouble(4, bebida.getPreco());
+            int resultado = pstmt.executeUpdate();
+            if (resultado == 1) {
+                System.out.println("\nInserção bem sucedida.");
+            } else {
+                System.out.println("A inserção não foi feita corretamente.");
+            }
+        }
+    }
 }

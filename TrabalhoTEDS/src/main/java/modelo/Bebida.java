@@ -2,16 +2,16 @@ package modelo;
 
 public class Bebida extends Produto {
 
-    private long codigo_bebida;
+    private int codigo_bebida;
     private String nome;
     private String descricao;
     private double preco;
 
-    public long getCodigo_bebida() {
+    public int getCodigo_bebida() {
         return codigo_bebida;
     }
 
-    public void setCodigo_bebida(long codigo_bebida) {
+    public void setCodigo_bebida(int codigo_bebida) {
         this.codigo_bebida = codigo_bebida;
     }
 

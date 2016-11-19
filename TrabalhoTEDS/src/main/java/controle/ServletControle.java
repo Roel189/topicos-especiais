@@ -2,17 +2,23 @@ package controle;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Bebida;
 import modelo.Cliente;
 import modelo.Endereco;
+import modelo.Prato;
+import modelo.Produto;
+import modelo.dao.BebidaDAO;
 import modelo.dao.ClienteDAO;
 import modelo.dao.DAOFactory;
 import modelo.dao.EnderecoDAO;
-
+import modelo.dao.PratoDAO;
+import modelo.dao.ProdutoDAO;
 
 public class ServletControle extends HttpServlet {
 
@@ -33,7 +39,7 @@ public class ServletControle extends HttpServlet {
             DAOFactory factory = new DAOFactory();
             try {
                 factory.abrirConexao();
-                
+
                 EnderecoDAO dao_endereco = factory.criarEnderecoDAO();
                 Endereco endereco = new Endereco();
                 endereco.setEndereco(request.getParameter("endereco"));
@@ -44,7 +50,7 @@ public class ServletControle extends HttpServlet {
                 endereco.setCidade(request.getParameter("cidade"));
                 endereco.setComplemento(request.getParameter("complemento"));
                 dao_endereco.gravar(endereco);
-                
+
                 ClienteDAO dao_cliente = factory.criarClienteDAO();
                 Cliente cliente = new Cliente();
                 cliente.setCpf(request.getParameter("cpf"));
@@ -54,7 +60,75 @@ public class ServletControle extends HttpServlet {
                 cliente.setSenha(request.getParameter("senha"));
                 cliente.setIdEndereco(endereco.getIdEndereco());
                 dao_cliente.gravar(cliente);
+
+                RequestDispatcher rd = null;
+                rd = request.getRequestDispatcher("/index.html");
+                rd.forward(request, response);
+            } catch (SQLException ex) {
+                System.out.println("Erro no acesso ao banco de dados.");
+                DAOFactory.mostrarSQLException(ex);
+            } finally {
+                try {
+                    factory.fecharConexao();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexão com o BD.");
+                    DAOFactory.mostrarSQLException(ex);
+                }
+            }
+        } else if (caminho.equals("/produtos/bebida/adicionar")) {
+
+            DAOFactory factory = new DAOFactory();
+            try {
+                factory.abrirConexao();
                 
+                BebidaDAO dao_bebida = factory.criarBebidaDAO();
+                Bebida bebida = new Bebida();
+                bebida.setCodigo_bebida(Integer.parseInt(request.getParameter("codigo_bebida")));
+                bebida.setNome(request.getParameter("nome_bebida"));
+                bebida.setDescricao(request.getParameter("descricao_bebida"));
+                bebida.setPreco(Double.parseDouble(request.getParameter("preco_bebida")));
+                dao_bebida.gravar(bebida);
+                
+                ProdutoDAO dao_produto = factory.criarProdutoDAO();
+                Produto produto = new Produto();            
+                produto.setProduto_Bebida_codigo(bebida.getCodigo_bebida());
+                produto.setPreco(bebida.getPreco());              
+                dao_produto.gravar_bebida(produto);
+
+                RequestDispatcher rd = null;
+                rd = request.getRequestDispatcher("/index.html");
+                rd.forward(request, response);
+            } catch (SQLException ex) {
+                System.out.println("Erro no acesso ao banco de dados.");
+                DAOFactory.mostrarSQLException(ex);
+            } finally {
+                try {
+                    factory.fecharConexao();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexão com o BD.");
+                    DAOFactory.mostrarSQLException(ex);
+                }
+            }
+        } else if (caminho.equals("/produtos/prato/adicionar")) {
+
+            DAOFactory factory = new DAOFactory();
+            try {
+                factory.abrirConexao();
+                
+                PratoDAO dao_prato = factory.criarPratoDAO();
+                Prato prato = new Prato();
+                prato.setCodigo_prato(Integer.parseInt(request.getParameter("codigo_prato")));
+                prato.setNome(request.getParameter("nome_prato"));
+                prato.setDescricao(request.getParameter("descricao_prato"));
+                prato.setPreco(Double.parseDouble(request.getParameter("preco_prato")));
+                dao_prato.gravar(prato);
+                
+                ProdutoDAO dao_produto = factory.criarProdutoDAO();
+                Produto produto = new Produto();            
+                produto.setProduto_Prato_codigo(prato.getCodigo_prato());
+                produto.setPreco(prato.getPreco());              
+                dao_produto.gravar_prato(produto);
+
                 RequestDispatcher rd = null;
                 rd = request.getRequestDispatcher("/index.html");
                 rd.forward(request, response);

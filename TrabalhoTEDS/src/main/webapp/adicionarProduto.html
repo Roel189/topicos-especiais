@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Adicionar Produto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Cadastrar Bebida</h2>
+        <form action="/TrabalhoTEDS/produtos/bebida/adicionar" method="POST">
+            <p>Codigo: <input type="text" name="codigo_bebida" value="" /></p>
+            <p>Nome: <input type="text" name="nome_bebida" value="" /></p>
+            <p>Descricao: <textarea name="descricao_bebida"></textarea></p>
+            <p>Preco: <input type="text" name="preco_bebida" value="" /></p>
+            <p><input type="submit" value="Inserir Bebida" /></p>
+        </form>
+
+        <h2>Cadrastrar Prato</h2>
+        <form action="/TrabalhoTEDS/produtos/prato/adicionar" method="POST">
+            <p>Codigo: <input type="text" name="codigo_prato" value="" /></p>
+            <p>Nome: <input type="text" name="nome_prato" value="" /></p>
+            <p>Descricao: <textarea name="descricao_prato"></textarea></p>
+            <p>Preco: <input type="text" name="preco_prato" value="" /></p>
+            <p><input type="submit" value="Inserir Prato" /></p>
+        </form>
+
+        <form action="/ProjetoProvaDAW2Vendas/index.html">
+            <input type="submit" value="Voltar" />
+        </form>
+    </body>
+</html>

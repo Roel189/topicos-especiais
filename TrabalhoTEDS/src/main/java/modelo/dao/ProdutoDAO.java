@@ -26,8 +26,8 @@ public class ProdutoDAO {
                 if (rs.next()) {
                     produto = new Produto();
                     produto.setCodigo(rs.getLong(1));
-                    produto.setBebida_codigo(rs.getInt(2));
-                    produto.setPrato_codigo(rs.getInt(3));
+                    produto.setProduto_Bebida_codigo(rs.getInt(2));
+                    produto.setProduto_Prato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
                 }
             }
@@ -44,8 +44,8 @@ public class ProdutoDAO {
                 while (rs.next()) {
                     produto = new Produto();
                     produto.setCodigo(rs.getLong(1));
-                    produto.setBebida_codigo(rs.getInt(2));
-                    produto.setPrato_codigo(rs.getInt(3));
+                    produto.setProduto_Bebida_codigo(rs.getInt(2));
+                    produto.setProduto_Prato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
                     produtos.add(produto);
                 }
@@ -54,4 +54,33 @@ public class ProdutoDAO {
         return produtos;
     }
 
+    public void gravar_bebida(Produto produto) throws SQLException {
+
+        String insercao = "INSERT INTO produto (bebida_codigo, preco) VALUES (?, ?);";
+        try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
+            pstmt.setInt(1, produto.getProduto_Bebida_codigo());
+            pstmt.setDouble(2, produto.getPreco());
+            int resultado = pstmt.executeUpdate();
+            if (resultado == 1) {
+                System.out.println("\nInserção bem sucedida.");
+            } else {
+                System.out.println("A inserção não foi feita corretamente.");
+            }
+        }
+    }
+
+    public void gravar_prato(Produto produto) throws SQLException {
+
+        String insercao = "INSERT INTO produto (prato_codigo, preco) VALUES (?, ?);";
+        try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
+            pstmt.setInt(1, produto.getProduto_Prato_codigo());
+            pstmt.setDouble(2, produto.getPreco());
+            int resultado = pstmt.executeUpdate();
+            if (resultado == 1) {
+                System.out.println("\nInserção bem sucedida.");
+            } else {
+                System.out.println("A inserção não foi feita corretamente.");
+            }
+        }
+    }
 }

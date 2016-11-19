@@ -54,5 +54,22 @@ public class PratoDAO {
         }
         return pratos;
     }
+    
+        public void gravar(Prato prato) throws SQLException {
+
+        String insercao = "INSERT INTO prato (codigo, nome, descricao, preco) VALUES (?, ?, ?, ?);";
+        try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
+            pstmt.setInt(1, prato.getCodigo_prato());
+            pstmt.setString(2, prato.getNome());
+            pstmt.setString(3, prato.getDescricao());
+            pstmt.setDouble(4, prato.getPreco());
+            int resultado = pstmt.executeUpdate();
+            if (resultado == 1) {
+                System.out.println("\nInserção bem sucedida.");
+            } else {
+                System.out.println("A inserção não foi feita corretamente.");
+            }
+        }
+    }
 
 }
