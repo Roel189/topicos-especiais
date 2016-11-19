@@ -10,6 +10,15 @@ public class Pedido {
     private String dataCompra;
     private double valor;
     private List<Item> itens = new ArrayList<>();
+    private String cpf;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     public long getCodigo() {
         return codigo;
@@ -19,11 +28,11 @@ public class Pedido {
         this.codigo = codigo;
     }
 
-    public String getData() {
+    public String getDataCompra() {
         return dataCompra;
     }
 
-    public void setData(String data) {
+    public void setDataCompra(String data) {
         this.dataCompra = data;
     }
 

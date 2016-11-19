@@ -10,7 +10,7 @@ import java.util.List;
 import modelo.Produto;
 
 public class ProdutoDAO {
-    
+
     private final Connection conexao;
 
     public ProdutoDAO(Connection conexao) {
@@ -26,8 +26,8 @@ public class ProdutoDAO {
                 if (rs.next()) {
                     produto = new Produto();
                     produto.setCodigo(rs.getLong(1));
-                    produto.setNome(rs.getString(2));
-                    produto.setDescricao(rs.getString(3));
+                    produto.setBebida_codigo(rs.getInt(2));
+                    produto.setPrato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
                 }
             }
@@ -44,8 +44,8 @@ public class ProdutoDAO {
                 while (rs.next()) {
                     produto = new Produto();
                     produto.setCodigo(rs.getLong(1));
-                    produto.setNome(rs.getString(2));
-                    produto.setDescricao(rs.getString(3));
+                    produto.setBebida_codigo(rs.getInt(2));
+                    produto.setPrato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
                     produtos.add(produto);
                 }

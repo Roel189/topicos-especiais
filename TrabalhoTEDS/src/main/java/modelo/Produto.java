@@ -2,9 +2,9 @@ package modelo;
 
 public class Produto {
     private long codigo;
-    private String nome;
-    private String descricao;
-    private double preco;
+    private int prato_codigo;
+    private int bebida_codigo;
+     private double preco;
 
     public long getCodigo() {
         return codigo;
@@ -14,20 +14,20 @@ public class Produto {
         this.codigo = codigo;
     }
 
-    public String getNome() {
-        return nome;
+    public int getPrato_codigo() {
+        return prato_codigo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPrato_codigo(int prato_codigo) {
+        this.prato_codigo = prato_codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public int getBebida_codigo() {
+        return bebida_codigo;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setBebida_codigo(int bebida_codigo) {
+        this.bebida_codigo = bebida_codigo;
     }
 
     public double getPreco() {
@@ -37,4 +37,5 @@ public class Produto {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
 }

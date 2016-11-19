@@ -23,7 +23,7 @@ public class PedidoDAO {
         ItemDAO dao = new ItemDAO(conexao);
         String insercao = "INSERT INTO pedido (dataCompra, valor) VALUES (?, ?);";
         try (PreparedStatement pstmt = conexao.prepareStatement(insercao, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, pedido.getData());
+            pstmt.setString(1, pedido.getDataCompra());
             pstmt.setDouble(2, pedido.getValor());
             int resultado = pstmt.executeUpdate();
             if (resultado == 1) {
@@ -53,7 +53,7 @@ public class PedidoDAO {
                 while (rs.next()) {
                     pedido = new Pedido();
                     pedido.setCodigo(rs.getLong(1));
-                    pedido.setData(rs.getString(2));
+                    pedido.setDataCompra(rs.getString(2));
                     pedido.setValor(rs.getDouble(3));
                     dao.buscarTodos(pedido);
                     pedidos.add(pedido);
