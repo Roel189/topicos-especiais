@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Cliente;
 import modelo.Endereco;
-import modelo.Item;
-import modelo.Pedido;
-import modelo.Produto;
+
 
 public class EnderecoDAO {
     

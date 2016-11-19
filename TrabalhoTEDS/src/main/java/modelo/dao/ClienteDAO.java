@@ -8,9 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Cliente;
-import modelo.Item;
-import modelo.Pedido;
-import modelo.Produto;
+
 
 public class ClienteDAO {
     
@@ -24,7 +22,7 @@ public class ClienteDAO {
     
     public void gravar(Cliente cliente) throws SQLException {
 
-        String insercao = "INSERT INTO cliente (cpf, nome, data_nasc, email, senha, idEndereco) VALUES (?, ?, ?, ?, ?, ?);";
+        String insercao = "INSERT INTO cliente (cpf, nome, data_nasc, email, senha, endereco_idEndereco) VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement pstmt = conexao.prepareStatement(insercao, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, cliente.getCpf());
             pstmt.setString(2, cliente.getNome());

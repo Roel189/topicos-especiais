@@ -12,7 +12,7 @@ public class ConexaoFactory {
         String host = "localhost";
         String porta = "3306";
 //        String porta = "5432";
-        String bd = "controlevendas";
+        String bd = "db_restaurante";
         String login = "root";
 //        String login = "postgres";
         String senha = "12345";  // admwindows, admlinux ou vazia “”

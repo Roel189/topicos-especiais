@@ -31,6 +31,22 @@ public class DAOFactory {
         }
     }
 
+    public ClienteDAO criarClienteDAO() {
+        if (conexao == null) {
+            throw new IllegalStateException("Abra uma conexão antes de criar um DAO.");
+        } else {
+            return new ClienteDAO(conexao);
+        }
+    }
+
+    public EnderecoDAO criarEnderecoDAO() {
+        if (conexao == null) {
+            throw new IllegalStateException("Abra uma conexão antes de criar um DAO.");
+        } else {
+            return new EnderecoDAO(conexao);
+        }
+    }
+
     public void abrirConexao() throws SQLException {
         if (conexao == null) {
             conexao = ConexaoFactory.getConexao();
