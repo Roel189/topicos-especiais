@@ -1,10 +1,12 @@
 package modelo;
 
 public class Produto {
+
     private long codigo;
+    private String nome;
     private int prato_codigo;
     private int bebida_codigo;
-     private double preco;
+    private double preco;
 
     public long getCodigo() {
         return codigo;
@@ -12,6 +14,14 @@ public class Produto {
 
     public void setCodigo(long codigo) {
         this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getProduto_Prato_codigo() {

@@ -19,7 +19,7 @@ public class ProdutoDAO {
 
     public Produto buscar(long codigo) throws SQLException {
         Produto produto = null;
-        String selecao = "SELECT * FROM produto WHERE codigo = ?";
+        String selecao = "SELECT * FROM produto WHERE prato_codigo or bebida_codigo = ?";
         try (PreparedStatement pstmt = conexao.prepareStatement(selecao)) {
             pstmt.setLong(1, codigo);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -29,6 +29,7 @@ public class ProdutoDAO {
                     produto.setProduto_Bebida_codigo(rs.getInt(2));
                     produto.setProduto_Prato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
+                    produto.setNome(rs.getString(5));
                 }
             }
         }
@@ -47,6 +48,7 @@ public class ProdutoDAO {
                     produto.setProduto_Bebida_codigo(rs.getInt(2));
                     produto.setProduto_Prato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
+                    produto.setNome(rs.getString(5));
                     produtos.add(produto);
                 }
             }
@@ -56,10 +58,11 @@ public class ProdutoDAO {
 
     public void gravar_bebida(Produto produto) throws SQLException {
 
-        String insercao = "INSERT INTO produto (bebida_codigo, preco) VALUES (?, ?);";
+        String insercao = "INSERT INTO produto (bebida_codigo, preco, nome) VALUES (?, ?, ?);";
         try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
             pstmt.setInt(1, produto.getProduto_Bebida_codigo());
             pstmt.setDouble(2, produto.getPreco());
+            pstmt.setString(3, produto.getNome());
             int resultado = pstmt.executeUpdate();
             if (resultado == 1) {
                 System.out.println("\nInserção bem sucedida.");
@@ -71,10 +74,11 @@ public class ProdutoDAO {
 
     public void gravar_prato(Produto produto) throws SQLException {
 
-        String insercao = "INSERT INTO produto (prato_codigo, preco) VALUES (?, ?);";
+        String insercao = "INSERT INTO produto (prato_codigo, preco, nome) VALUES (?, ?, ?);";
         try (PreparedStatement pstmt = conexao.prepareStatement(insercao)) {
             pstmt.setInt(1, produto.getProduto_Prato_codigo());
             pstmt.setDouble(2, produto.getPreco());
+            pstmt.setString(3, produto.getNome());
             int resultado = pstmt.executeUpdate();
             if (resultado == 1) {
                 System.out.println("\nInserção bem sucedida.");

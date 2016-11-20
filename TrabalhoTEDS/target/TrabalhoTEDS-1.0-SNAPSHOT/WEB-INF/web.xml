@@ -20,5 +20,7 @@
         <url-pattern>/produtos/bebida/adicionar</url-pattern>
         <url-pattern>/produtos/prato/adicionar</url-pattern>
         <url-pattern>/produtos/comprar</url-pattern>
+        <url-pattern>/carrinho/adicionar</url-pattern>
+        <url-pattern>/vendas/finalizar</url-pattern>
     </servlet-mapping>
 </web-app>

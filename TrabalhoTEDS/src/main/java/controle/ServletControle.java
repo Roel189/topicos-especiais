@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Bebida;
+import modelo.CarrinhoCompras;
 import modelo.Cliente;
 import modelo.Endereco;
+import modelo.Pedido;
 import modelo.Prato;
 import modelo.Produto;
 import modelo.dao.BebidaDAO;
 import modelo.dao.ClienteDAO;
 import modelo.dao.DAOFactory;
 import modelo.dao.EnderecoDAO;
+import modelo.dao.PedidoDAO;
 import modelo.dao.PratoDAO;
 import modelo.dao.ProdutoDAO;
 
@@ -93,6 +96,7 @@ public class ServletControle extends HttpServlet {
                 Produto produto = new Produto();
                 produto.setProduto_Bebida_codigo(bebida.getCodigo_bebida());
                 produto.setPreco(bebida.getPreco());
+                produto.setNome(bebida.getNome());
                 dao_produto.gravar_bebida(produto);
 
                 RequestDispatcher rd = null;
@@ -127,6 +131,7 @@ public class ServletControle extends HttpServlet {
                 Produto produto = new Produto();
                 produto.setProduto_Prato_codigo(prato.getCodigo_prato());
                 produto.setPreco(prato.getPreco());
+                produto.setNome(prato.getNome());
                 dao_produto.gravar_prato(produto);
 
                 RequestDispatcher rd = null;
@@ -158,6 +163,67 @@ public class ServletControle extends HttpServlet {
 
                 RequestDispatcher rd = null;
                 rd = request.getRequestDispatcher("/efetuarVenda.jsp");
+                rd.forward(request, response);
+
+            } catch (SQLException ex) {
+                System.out.println("Erro no acesso ao banco de dados.");
+                DAOFactory.mostrarSQLException(ex);
+            } finally {
+                try {
+                    factory.fecharConexao();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexão com o BD.");
+                    DAOFactory.mostrarSQLException(ex);
+                }
+            }
+        }else if (caminho.equals("/carrinho/adicionar")) {
+            CarrinhoCompras carrinho = (CarrinhoCompras) request.getSession().getAttribute("carrinho");
+            if (carrinho == null) {
+                carrinho = new CarrinhoCompras();
+            }
+
+            int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+            long codigo = Long.parseLong(request.getParameter("codigo"));
+            DAOFactory factory = new DAOFactory();
+            try {
+                factory.abrirConexao();
+                ProdutoDAO dao = factory.criarProdutoDAO();
+                Produto produto = dao.buscar(codigo);
+                carrinho.adicionarItem(quantidade, produto);
+                request.getSession().setAttribute("carrinho", carrinho);
+
+                RequestDispatcher rd = null;
+                rd = request.getRequestDispatcher("/produtos/comprar");
+                rd.forward(request, response);
+
+            } catch (SQLException ex) {
+                System.out.println("Erro no acesso ao banco de dados.");
+                DAOFactory.mostrarSQLException(ex);
+            } finally {
+                try {
+                    factory.fecharConexao();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexão com o BD.");
+                    DAOFactory.mostrarSQLException(ex);
+                }
+            }
+        }else if (caminho.equals("/vendas/finalizar")) {
+            CarrinhoCompras carrinho = (CarrinhoCompras) request.getSession().getAttribute("carrinho");
+
+            Pedido pedido = new Pedido();
+            pedido.setDataCompra("30/06/2016");
+            pedido.setItens(carrinho.getItens());
+
+            DAOFactory factory = new DAOFactory();
+            try {
+                factory.abrirConexao();
+                PedidoDAO dao = factory.criarPedidoDAO();
+                dao.gravar(pedido);
+                carrinho.esvaziar();
+                request.getSession().setAttribute("carrinho", carrinho);
+
+                RequestDispatcher rd = null;
+                rd = request.getRequestDispatcher("/index.html");
                 rd.forward(request, response);
 
             } catch (SQLException ex) {
