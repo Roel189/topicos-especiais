@@ -25,7 +25,7 @@ public class ProdutoDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     produto = new Produto();
-                    produto.setCodigo(rs.getLong(1));
+                    produto.setCodigo(rs.getLong(1));                   
                     produto.setProduto_Bebida_codigo(rs.getInt(2));
                     produto.setProduto_Prato_codigo(rs.getInt(3));
                     produto.setPreco(rs.getDouble(4));
