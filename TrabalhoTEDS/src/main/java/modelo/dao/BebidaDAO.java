@@ -25,7 +25,7 @@ public class BebidaDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     bebida = new Bebida();
-                    bebida.setCodigo(rs.getLong(1));
+                    bebida.setCodigo_bebida(rs.getInt(1));
                     bebida.setNome(rs.getString(2));
                     bebida.setDescricao(rs.getString(3));
                     bebida.setPreco(rs.getDouble(4));
@@ -43,10 +43,10 @@ public class BebidaDAO {
             try (ResultSet rs = stmt.executeQuery(selecao)) {
                 while (rs.next()) {
                     bebida = new Bebida();
-                    bebida.setCodigo(rs.getLong(1));
+                    bebida.setCodigo_bebida(rs.getInt(1));
                     bebida.setNome(rs.getString(2));
-                    bebida.setDescricao(rs.getString(3));
-                    bebida.setPreco(rs.getDouble(4));
+                    bebida.setPreco(rs.getDouble(3));
+                    bebida.setDescricao(rs.getString(4));
                     bebidas.add(bebida);
                 }
             }

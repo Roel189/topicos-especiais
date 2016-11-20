@@ -26,7 +26,7 @@ public class PratoDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     prato = new Prato();
-                    prato.setCodigo(rs.getLong(1));
+                    prato.setCodigo_prato(rs.getInt(1));
                     prato.setNome(rs.getString(2));
                     prato.setDescricao(rs.getString(3));
                     prato.setPreco(rs.getDouble(4));
@@ -44,10 +44,10 @@ public class PratoDAO {
             try (ResultSet rs = stmt.executeQuery(selecao)) {
                 while (rs.next()) {
                     prato = new Prato();
-                    prato.setCodigo(rs.getLong(1));
+                    prato.setCodigo_prato(rs.getInt(1));
                     prato.setNome(rs.getString(2));
-                    prato.setDescricao(rs.getString(3));
-                    prato.setPreco(rs.getDouble(4));
+                    prato.setPreco(rs.getDouble(3));
+                    prato.setDescricao(rs.getString(4));
                     pratos.add(prato);
                 }
             }

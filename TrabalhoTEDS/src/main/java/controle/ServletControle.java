@@ -80,7 +80,7 @@ public class ServletControle extends HttpServlet {
             DAOFactory factory = new DAOFactory();
             try {
                 factory.abrirConexao();
-                
+
                 BebidaDAO dao_bebida = factory.criarBebidaDAO();
                 Bebida bebida = new Bebida();
                 bebida.setCodigo_bebida(Integer.parseInt(request.getParameter("codigo_bebida")));
@@ -88,11 +88,11 @@ public class ServletControle extends HttpServlet {
                 bebida.setDescricao(request.getParameter("descricao_bebida"));
                 bebida.setPreco(Double.parseDouble(request.getParameter("preco_bebida")));
                 dao_bebida.gravar(bebida);
-                
+
                 ProdutoDAO dao_produto = factory.criarProdutoDAO();
-                Produto produto = new Produto();            
+                Produto produto = new Produto();
                 produto.setProduto_Bebida_codigo(bebida.getCodigo_bebida());
-                produto.setPreco(bebida.getPreco());              
+                produto.setPreco(bebida.getPreco());
                 dao_produto.gravar_bebida(produto);
 
                 RequestDispatcher rd = null;
@@ -114,7 +114,7 @@ public class ServletControle extends HttpServlet {
             DAOFactory factory = new DAOFactory();
             try {
                 factory.abrirConexao();
-                
+
                 PratoDAO dao_prato = factory.criarPratoDAO();
                 Prato prato = new Prato();
                 prato.setCodigo_prato(Integer.parseInt(request.getParameter("codigo_prato")));
@@ -122,16 +122,44 @@ public class ServletControle extends HttpServlet {
                 prato.setDescricao(request.getParameter("descricao_prato"));
                 prato.setPreco(Double.parseDouble(request.getParameter("preco_prato")));
                 dao_prato.gravar(prato);
-                
+
                 ProdutoDAO dao_produto = factory.criarProdutoDAO();
-                Produto produto = new Produto();            
+                Produto produto = new Produto();
                 produto.setProduto_Prato_codigo(prato.getCodigo_prato());
-                produto.setPreco(prato.getPreco());              
+                produto.setPreco(prato.getPreco());
                 dao_produto.gravar_prato(produto);
 
                 RequestDispatcher rd = null;
                 rd = request.getRequestDispatcher("/index.html");
                 rd.forward(request, response);
+            } catch (SQLException ex) {
+                System.out.println("Erro no acesso ao banco de dados.");
+                DAOFactory.mostrarSQLException(ex);
+            } finally {
+                try {
+                    factory.fecharConexao();
+                } catch (SQLException ex) {
+                    System.out.println("Erro ao fechar a conexão com o BD.");
+                    DAOFactory.mostrarSQLException(ex);
+                }
+            }
+        } else if (caminho.equals("/produtos/comprar")) {
+            DAOFactory factory = new DAOFactory();
+            try {
+                factory.abrirConexao();
+
+                BebidaDAO dao_bebida = factory.criarBebidaDAO();
+                List<Bebida> bebidas = dao_bebida.buscarTodos();
+                request.setAttribute("bebidas", bebidas);
+
+                PratoDAO dao_prato = factory.criarPratoDAO();
+                List<Prato> pratos = dao_prato.buscarTodos();
+                request.setAttribute("pratos", pratos);
+
+                RequestDispatcher rd = null;
+                rd = request.getRequestDispatcher("/efetuarVenda.jsp");
+                rd.forward(request, response);
+
             } catch (SQLException ex) {
                 System.out.println("Erro no acesso ao banco de dados.");
                 DAOFactory.mostrarSQLException(ex);
